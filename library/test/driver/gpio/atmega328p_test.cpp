@@ -154,11 +154,11 @@ void runInputTest(const std::uint8_t id, GpioRegs& regs) noexcept
         EXPECT_TRUE(utils::read(regs.portx, pin));
         // Set the input high in PINx, expect the GPIO input to be high.
         utils::set(regs.pinx, pin);
-        EXPECT_TRUE(utils::read(regs.pinx, pin));
+        EXPECT_TRUE(gpio.read());
 
         // Set the input low in PINx, expect the GPIO input to be low.
         utils::clear(regs.pinx, pin);
-        EXPECT_FALSE(utils::read(regs.pinx, pin));
+        EXPECT_FALSE(gpio.read());
     }
     // Expect DDRx and PORTx to be cleared after the instance has been deleted.
     EXPECT_FALSE(utils::read(regs.ddrx, pin));
@@ -179,15 +179,22 @@ TEST(Gpio_Atmega328p, Initialization)
     for (std::uint8_t pin{}; pin < pinMax; ++pin)
     {
         // Create a new GPIO instance with the current pin number.
+        gpio::Atmega328p gpio{pin, gpio::Direction::Output};
         // Example: gpio::Atmega328p gpio{pin, gpio::Direction::Output};
 
         // Expect the instance to be initialized correctly if the pin is valid.
+        const bool pinValid{isPinValid(pin)};
+        EXPECT_EQ(gpio.isInitialized(), pinValid);
+
         // Tips: Check if the instance is initialized by invoking gpio.isInitialized().
         //       Check if the pin is valid by invoking isPinValid(pin).
         //       Use EXPECT_TRUE(), EXPECT_FALSE, and/or EXPECT_EQ to validate the functionality.
 
         // Create another GPIO instance on the same pin.
+        gpio::Atmega328p gpio2{pin, gpio::Direction::Input};
+
         // Expect the instance to not be initialized, since the pin is already reserved.
+        EXPECT_FALSE(gpio2.isInitialized());
     }
 }
 
