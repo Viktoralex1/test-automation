@@ -2,6 +2,7 @@
  * @brief Unit tests for the Atmega328p GPIO driver.
  */
 #include <cstdint>
+#include <cstdio>
 
 #include <gtest/gtest.h>
 
@@ -10,9 +11,6 @@
 #include "utils/utils.h"
 
 #ifdef TESTSUITE
-
-//! @todo Remove this #ifdef in lecture 2 to enable these tests.
-#ifdef LECTURE2
 
 namespace driver
 {
@@ -85,52 +83,87 @@ constexpr void simulateToggle(GpioRegs& regs) noexcept
 void runOutputTest(const std::uint8_t id, GpioRegs& regs) noexcept
 {
     // Get the physical pin on the given port.
-    // Example: const std::uint8_t pin{getPhysicalPin(id)};
+    const std::uint8_t pin{getPhysicalPin(id)};
 
     // Limit the scope of the GPIO instance.
     {
         // Create a new GPIO output.
+        gpio::Atmega328p gpio{id, gpio::Direction::Output};
 
         // Expect the instance to be initialized correctly if the pin is valid.
+        const bool pinValid{isPinValid(id)};
+        EXPECT_EQ(gpio.isInitialized(), pinValid);
         
         // Expect the GPIO to be set as output, i.e., the corresponding bit in DDRx should be set.
         // Tips: Check that the pin is set with EXPECT_TRUE() and utils::read(regs.ddrx, pin).
 
+        // Call utils::read, expect it to return true, since the bit in DDRx should be set
+        //Otherwise the pin is not configured as output.
+        EXPECT_TRUE(utils::read(regs.ddrx, pin));
+
         // Set the output high, expect the corresponding bit in PORTx to be set.
-        // Tips: Use gpio.write() to set the output, read the bit with 
-        // utils::read(regs.portx, pin);
+        gpio.write(true);
+        EXPECT_TRUE(utils::read(regs.portx, pin));
 
         // Set the output low, expect the corresponding bit in PORTx to be cleared.
+        gpio.write(false);
+        EXPECT_FALSE(utils::read(regs.portx, pin));
 
         // Toggle the output, expect the corresponding bit in PORTx to be set.
+        gpio.toggle();
+        simulateToggle(regs);
+        EXPECT_TRUE(utils::read(regs.portx, pin));
 
         // Toggle the output again, expect the corresponding bit in PORTx to be cleared.
-
+        gpio.toggle();
+        simulateToggle(regs);
+        EXPECT_FALSE(utils::read(regs.portx, pin));
+        
         // Toggle the output once more, expect the corresponding bit in PORTx to be set.
+        gpio.toggle();
+        simulateToggle(regs);
+        EXPECT_TRUE(utils::read(regs.portx, pin));
     }
     // Expect DDRx and PORTx to be cleared after the instance has been deleted.
+    EXPECT_FALSE(utils::read(regs.ddrx, pin));
+    EXPECT_FALSE(utils::read(regs.portx, pin));
+
 }
 
 // -----------------------------------------------------------------------------
 void runInputTest(const std::uint8_t id, GpioRegs& regs) noexcept
 {
     // Get the physical pin on the given port.
+    const std::uint8_t pin{getPhysicalPin(id)};
+
 
     // Limit the scope of the GPIO instance.
     {
         // Create a new GPIO input with internal pull-up resistor enabled.
         // Expect the instance to be initialized correctly if the pin is valid.
-        
-        // Expect the GPIO to be set as input, i.e., the corresponding bit in DDRx should be cleared.
+        gpio::Atmega328p gpio{id, gpio::Direction::InputPullup};
 
+        const bool pinValid{isPinValid(id)};
+        EXPECT_EQ(gpio.isInitialized(), pinValid);
+
+        // Expect the GPIO to be set as input, i.e., the corresponding bit in DDRx should be cleared.
+        EXPECT_FALSE(utils::read(regs.ddrx, pin));        
         // Expect the internal pull-up resistor to be enabled, i.e., the corresponding bit in PORTx
         // should be set.
 
+        EXPECT_TRUE(utils::read(regs.portx, pin));
         // Set the input high in PINx, expect the GPIO input to be high.
+        utils::set(regs.pinx, pin);
+        EXPECT_TRUE(utils::read(regs.pinx, pin));
 
         // Set the input low in PINx, expect the GPIO input to be low.
+        utils::clear(regs.pinx, pin);
+        EXPECT_FALSE(utils::read(regs.pinx, pin));
     }
     // Expect DDRx and PORTx to be cleared after the instance has been deleted.
+    EXPECT_FALSE(utils::read(regs.ddrx, pin));
+    EXPECT_FALSE(utils::read(regs.pinx, pin));
+
 }
 
 /**
@@ -217,9 +250,6 @@ TEST(Gpio_Atmega328p, Input)
 }
 } // namespace
 } // namespace driver
-
-//! @todo Remove this #endif in lecture 2 to enable these tests.
-#endif /** LECTURE2 */
 
 #endif /** TESTSUITE */
 
