@@ -127,7 +127,6 @@ void runOutputTest(const std::uint8_t id, GpioRegs& regs) noexcept
     // Expect DDRx and PORTx to be cleared after the instance has been deleted.
     EXPECT_FALSE(utils::read(regs.ddrx, pin));
     EXPECT_FALSE(utils::read(regs.portx, pin));
-
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +134,6 @@ void runInputTest(const std::uint8_t id, GpioRegs& regs) noexcept
 {
     // Get the physical pin on the given port.
     const std::uint8_t pin{getPhysicalPin(id)};
-
 
     // Limit the scope of the GPIO instance.
     {
@@ -163,7 +161,6 @@ void runInputTest(const std::uint8_t id, GpioRegs& regs) noexcept
     // Expect DDRx and PORTx to be cleared after the instance has been deleted.
     EXPECT_FALSE(utils::read(regs.ddrx, pin));
     EXPECT_FALSE(utils::read(regs.pinx, pin));
-
 }
 
 /**
