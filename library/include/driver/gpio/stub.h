@@ -119,7 +119,7 @@ public:
     Stub(Stub&&)                 = delete; // No move constructor.
     Stub& operator=(const Stub&) = delete; // No copy assignment.
     Stub& operator=(Stub&&)      = delete; // No move assignment.
-
+        
 private:
     /* Gpio enablement (true = HIGH, false = LOW)*/
     bool myEnabled;

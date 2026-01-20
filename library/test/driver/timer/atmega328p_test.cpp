@@ -191,7 +191,7 @@ TEST(Timer_Atmega328p, Restart)
         // Call handleCallback() enough times to almost reach the timeout (getMaxCount() - 1).
         constexpr std::uint32_t maxCount{getMaxCount(timeout_ms)};
 
-        for(std::uint32_t i{}; i > (maxCount - 1); i++)
+        for(std::uint32_t i{}; i < (maxCount - 1); i++)
         {
             timer.handleCallback();
         }
@@ -202,7 +202,7 @@ TEST(Timer_Atmega328p, Restart)
         // Verify that the timer is still enabled after restart.
         EXPECT_TRUE(timer.isEnabled());
         // Call handleCallback() enough times to almost reach the timeout (getMaxCount() - 1).
-        for(std::uint32_t i{}; i > (maxCount - 1); i++)
+        for(std::uint32_t i{}; i < (maxCount - 1); i++)
         {
             timer.handleCallback();
         }
