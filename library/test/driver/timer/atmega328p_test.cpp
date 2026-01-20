@@ -93,16 +93,26 @@ TEST(Timer_Atmega328p, EnableDisable)
 {
     //! @todo Test timer enablement.
         // Create a timer with a timeout.
+        timer::Atmega328p timer(100U);
         
         // Verify timer is not enabled initially (unless auto-started via the constructor).
+        EXPECT_FALSE(timer.isEnabled());
         // Start the timer.
+        timer.start();
         // Verify that the timer is enabled.
+        EXPECT_TRUE(timer.isEnabled());
         // Stop the timer.
+        timer.stop();
         // Verify that the timer is disabled.
+        EXPECT_FALSE(timer.isEnabled());
         // Toggle the timer.
+        timer.toggle();
         // Verify that the timer is enabled.
+        EXPECT_TRUE(timer.isEnabled());
         // Toggle the timer once again.
+        timer.toggle();
         // Verify that the timer is disabled.
+        EXPECT_FALSE(timer.isEnabled());
 
     //! @note Once the above is working:
     //!       Feel free to try all three timers. When enabling/disabling, feel free to check both
@@ -123,6 +133,7 @@ TEST(Timer_Atmega328p, Timeout)
     //! @todo Test timer timeout:
         // Create a timer with an initial timeout of 100 ms.
         // Verify timeout_ms() returns the correct value.
+
         // Change the timeout to 200 ms using setTimeout_ms().
         // Verify the new timeout is returned by timeout_ms().
         // Change the timeout to 0 ms using setTimeout_ms().
