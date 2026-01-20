@@ -19,8 +19,6 @@ namespace
 /** Maximum number of timer circuits available on ATmega328P. */
 constexpr std::uint8_t MaxTimerCount{3U};
 
-//! @todo Remove this #ifdef when starting to work on the callback test.
-#ifdef CALLBACK
 
 /** Flag to track if callback was invoked. */
 bool callbackInvoked{false};
@@ -35,12 +33,11 @@ void testCallback() noexcept { callbackInvoked = true; }
 constexpr std::uint32_t getMaxCount(const std::uint32_t timeout_ms) noexcept
 {
     constexpr double interruptIntervalMs{0.128};
+
+    // Only perform division (requires quite a lot of resources) if the timeout is valid.
 	return 0U < timeout_ms ? 
         utils::round<std::uint32_t>(timeout_ms / interruptIntervalMs) : 0U;
 }
-
-//! @todo Remove this #endif when starting to work on the callback test.
-#endif /** CALLBACK */
 
 /**
  * @brief Timer initialization test.
@@ -132,12 +129,18 @@ TEST(Timer_Atmega328p, Timeout)
 {
     //! @todo Test timer timeout:
         // Create a timer with an initial timeout of 100 ms.
+        timer::Atmega328p timer(100U);
         // Verify timeout_ms() returns the correct value.
+        EXPECT_EQ(timer.timeout_ms(), 100U);
 
         // Change the timeout to 200 ms using setTimeout_ms().
+        timer.setTimeout_ms(200U);
         // Verify the new timeout is returned by timeout_ms().
+        EXPECT_EQ(timer.timeout_ms(), 200U);
         // Change the timeout to 0 ms using setTimeout_ms().
+        timer.setTimeout_ms(0U);
         // Verify that the timeout is unchanged (0 ms is an invalid timeout).
+        EXPECT_EQ(timer.timeout_ms(),200U);
 }
 
 /**
@@ -147,13 +150,28 @@ TEST(Timer_Atmega328p, Timeout)
  */
 TEST(Timer_Atmega328p, Callback)
 {
+    constexpr std::uint16_t timeout_ms{10U};
+
     //! @todo Test timer callback:
         // Reset the callback flag (callbackInvoked) using resetCallbackFlag().
+        resetCallbackFlag();
+
         // Create a timer with a short timeout, such as 10 ms, and testCallback() as callback.
+        timer::Atmega328p timer(timeout_ms, testCallback);
         // Start the timer.
+        timer.start();
+
         // Simulate timer interrupts by repeatedly calling handleCallback() on the timer.
         // Call handleCallback() enough times to reach the timeout (getMaxCount()).
+        constexpr std::uint32_t maxCount{getMaxCount(timeout_ms)};
+
+        for (std::uint32_t i{}; i < maxCount; ++i)
+        {
+            timer.handleCallback();
+        }
+
         // Verify that callbackInvoked is true after timeout.
+        EXPECT_TRUE(callbackInvoked);
         // Note: handleCallback() increments the timer and invokes the callback when timeout is reached.
 }
 
@@ -164,17 +182,39 @@ TEST(Timer_Atmega328p, Callback)
  */
 TEST(Timer_Atmega328p, Restart)
 {
+    constexpr std::uint32_t timeout_ms{10U};
     //! @todo Test timer restart:
         // Reset the callback flag (callbackInvoked) using resetCallbackFlag().
+        resetCallbackFlag();
         // Create and start a timer with testCallback() as callback.
+        timer::Atmega328p timer{timeout_ms, testCallback};
         // Call handleCallback() enough times to almost reach the timeout (getMaxCount() - 1).
+        constexpr std::uint32_t maxCount{getMaxCount(timeout_ms)};
+
+        for(std::uint32_t i{}; i > maxCount - 1; i++)
+        {
+            timer.handleCallback();
+        }
         // Verify that the callback flag (callbackInvoked) is still false.
+        EXPECT_FALSE(callbackInvoked);
         // Restart the timer.
+        timer.restart();
         // Verify that the timer is still enabled after restart.
+        EXPECT_TRUE(timer.isEnabled());
         // Call handleCallback() enough times to almost reach the timeout (getMaxCount() - 1).
+        for(std::uint32_t i{}; i > maxCount - 1; i++)
+        {
+            timer.handleCallback();
+        }
         // Verify that the callback flag (callbackInvoked) is still false, since the timer was restarted.
+        EXPECT_FALSE(callbackInvoked);
         // Call handleCallback() again to reach timeout.
+        for(std::uint32_t i{}; i > maxCount; i++)
+        {
+            timer.handleCallback();
+        }
         // Verify that the callback flag (callbackInvoked) is true due to timeout.
+        EXPECT_TRUE(callbackInvoked);
 }
 
 //! @todo Add more tests here (e.g., register verification, multiple timers running simultaneously).
