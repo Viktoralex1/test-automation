@@ -13,7 +13,7 @@ namespace tempsensor
 /**
  * @brief Temperature sensor stub.
  */
-class Stub
+class Stub final : public Interface
 {
 public:
 
@@ -35,15 +35,15 @@ public:
      * 
      * @return True if the temperature sensor is initialized, false otherwise.
      */
-    bool isInitialized() const noexcept { return myInitialized; }
+    bool isInitialized() const noexcept override { return myInitialized; }
 
     /**
      * @brief Read the temperature sensor.
      *
      * @return The temperature in degrees Celsius.
      */
-    int16_t read() const noexcept {
-        if (myInitialized){ return temperature; }
+    int16_t read() const noexcept override {
+        return temperature;
     }
 
     Stub(const Stub&)            = delete; // No copy constructor.
@@ -56,7 +56,7 @@ private:
     /* Initialization state (high = True) */
     bool myInitialized;
     /* Temperature */
-    uint32_t temperature;
+    int16_t temperature;
 
 };
 } // namespace tempsensor

@@ -17,9 +17,6 @@
 #include "driver/watchdog/stub.h"
 #include "logic/stub.h"
 
-//! @todo Remove this #ifdef block once all stubs are implemented!
-#ifdef STUBS_IMPLEMENTED
-
 #ifdef TESTSUITE
 
 namespace logic
@@ -213,42 +210,93 @@ TEST(Logic, DebounceHandling)
 TEST(Logic, ToggleHandling)
 {
     // Create logic implementation and run the system.
+    
+    Mock mock{};
+    logic::Interface& logic{mock.createLogic()};
+    mock.runSystem();
 
     // Expect the toggle timer and the LED to be disabled at the start.
+    
+    EXPECT_FALSE(mock.toggleTimer.isEnabled());
+    EXPECT_FALSE(mock.led.read());
 
     // Case 1 - Press the temperature button, simulate button event.
     // Expect the toggle timer to not be enabled, since the wrong button was pressed.
     {
+        mock.tempButton.write(true);
+        logic.handleButtonEvent();
+        mock.tempButton.write(false);
+
+        EXPECT_FALSE(mock.toggleTimer.isEnabled());
+        
+        // Simulate that the debounce timer times out, i.e. the buttons interrupts "work" again.
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
     }
 
     // Case 2 - Press the toggle button, simulate button event.
     // Expect the toggle timer to be enabled.
     {
+        mock.toggleButton.write(true);
+        logic.handleButtonEvent();
+        mock.toggleButton.write(false);
+
+        EXPECT_TRUE(mock.toggleTimer.isEnabled());
+
+        // Simulate that the debounce timer times out, i.e. the buttons interrupts "work" again.
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
     }
 
     // Case 3 - Simulate toggle timer timeout, expect the LED to be enabled.
     {
+        mock.toggleTimer.setTimedOut(true);
+        logic.handleToggleTimerTimeout();
+
+        EXPECT_TRUE(mock.led.read());
     }
 
     // Case 4 - Simulate that the toggle timer elapses again, expect the LED to be disabled.
     {
+        mock.toggleTimer.setTimedOut(true);
+        logic.handleToggleTimerTimeout();
+
+        EXPECT_FALSE(mock.led.read());
     }
 
     // Case 5 - Simulate that the toggle timer elapses once more, expect the LED to be enabled.
     {
+        mock.toggleTimer.setTimedOut(true);
+        logic.handleToggleTimerTimeout();
+
+        EXPECT_TRUE(mock.led.read());
     }
 
     // Case 6 - Press the toggle button once more, simulate button event.
     // Expect the toggle timer and LED to be disabled.
     {
+        mock.toggleButton.write(true);
+        logic.handleButtonEvent();
+        mock.toggleButton.write(false);
+
+        EXPECT_FALSE(mock.toggleTimer.isEnabled());
+        EXPECT_FALSE(mock.led.read());
     }
 
     // Case 7 - Simulate temperature timer timeout, expect the LED to be unaffected.
     {
+        mock.tempTimer.setTimedOut(true);
+        logic.handleTempTimerTimeout();
+
+        EXPECT_FALSE(mock.led.read());
     }
 
     // Case 8 - Simulate debounce timer timeout, expect the LED to be unaffected.
     {
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
+
+        EXPECT_FALSE(mock.led.read());
     }
 }
 
@@ -311,6 +359,3 @@ TEST(Logic, Eeprom)
 } // namespace logic
 
 #endif /** TESTSUITE */
-
-//! @todo Remove this #endif once all stubs are implemented!
-#endif /** STUBS_IMPLEMENTED */

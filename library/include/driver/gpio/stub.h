@@ -31,7 +31,7 @@ public:
      */
     ~Stub() noexcept override = default;
 
-    /**
+    /** 
      * @brief Check whether the GPIO is initialized.
      * 
      *        An uninitialized device indicates that the specified PIN was unavailable or invalid
@@ -119,7 +119,7 @@ public:
     Stub(Stub&&)                 = delete; // No move constructor.
     Stub& operator=(const Stub&) = delete; // No copy assignment.
     Stub& operator=(Stub&&)      = delete; // No move assignment.
-        
+
 private:
     /* Gpio enablement (true = HIGH, false = LOW)*/
     bool myEnabled;
