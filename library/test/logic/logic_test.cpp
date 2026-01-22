@@ -400,8 +400,14 @@ TEST(Logic, Eeprom)
         // Mark the toggle timer to have been enabled before poweroff by setting the
         // associated bit in EEPROM before creating the logic implementation.
         
-        // Create logic implementation and run the system.
+        const uint16_t toggleAddr{logic::Stub::toggleStateAddr()};
+        
         Mock mock{};
+
+        constexpr uint8_t enableByte{1U};
+        mock.eeprom.write(toggleAddr, enableByte);
+
+        // Create logic implementation and run the system.
         mock.createLogic();
         mock.runSystem();
 
