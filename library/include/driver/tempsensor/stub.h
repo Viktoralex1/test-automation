@@ -46,6 +46,8 @@ public:
         return temperature;
     }
 
+    void set_temp(int16_t sTemp) const noexcept {  sTemp = temperature; }
+
     Stub(const Stub&)            = delete; // No copy constructor.
     Stub(Stub&&)                 = delete; // No move constructor.
     Stub& operator=(const Stub&) = delete; // No copy assignment.

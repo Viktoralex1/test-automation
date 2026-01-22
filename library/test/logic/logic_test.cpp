@@ -223,10 +223,16 @@ TEST(Logic, ToggleHandling)
     // Case 1 - Press the temperature button, simulate button event.
     // Expect the toggle timer to not be enabled, since the wrong button was pressed.
     {
+        //Press the button
         mock.tempButton.write(true);
+
+        //Simulate button interrupt (we have to call it manually, since we don't have real interrupts)
         logic.handleButtonEvent();
+
+        //Realese the button
         mock.tempButton.write(false);
 
+        //We pressed the wrong button, hence the toggle timer should still be disabled. 
         EXPECT_FALSE(mock.toggleTimer.isEnabled());
         
         // Simulate that the debounce timer times out, i.e. the buttons interrupts "work" again.
@@ -308,24 +314,64 @@ TEST(Logic, ToggleHandling)
 TEST(Logic, TempHandling)
 {
     // Create logic implementation and run the system.
+    Mock mock{};
+    logic::Interface& logic{mock.createLogic()};
+    mock.runSystem();
     
-    // Expect the temperature timer to be disabled at the start.
+    // Expect the temperature timer to be enabled at the start.
+    EXPECT_TRUE(mock.tempTimer.isEnabled());
 
     // Set the temperature to 25 degrees Celsius.
+    mock.tempSensor.set_temp(25U);
 
-    // Case 1 - Press the toggle button, simulate button event.
-    // Expect the temperature to not be printed, since the wrong button was pressed.
+     // Case 1 - Press the toggle button, simulate button event.
     {
+        // Get the number of temperature printouts before the button press.
+        const auto printouts1{mock.logicImpl->tempPrintoutCount()};
+
+        mock.toggleButton.write(true);
+        logic.handleButtonEvent();
+        mock.toggleButton.write(false);
+
+        // Expect the temperature to not be printed, since the wrong button was pressed.
+        const auto printouts2{mock.logicImpl->tempPrintoutCount()};
+        EXPECT_EQ(printouts1, printouts2);
+
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
     }
 
     // Case 2 - Press the temperature button, simulate button event.
-    // Expect the temperature to be printed once.
     {
+        // Get the number of temperature printouts before the button press.
+        const auto printouts{mock.logicImpl->tempPrintoutCount()};
+
+        mock.tempButton.write(true);
+        logic.handleButtonEvent();
+        mock.tempButton.write(false);
+
+        const auto printouts1{mock.logicImpl->tempPrintoutCount()};
+    
+        // Expect the temperature to be printed once.
+        EXPECT_EQ(printouts1, printouts + 1);
+
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
     }
 
     // Case 3 - Simulate temperature timer timeout.
     // Expect the temperature to be printed once more.
     {
+        const auto printouts{mock.logicImpl->tempPrintoutCount()};
+
+        mock.tempTimer.setTimedOut(true);
+        logic.handleTempTimerTimeout();
+
+        const auto printouts1{mock.logicImpl->tempPrintoutCount()};
+        EXPECT_EQ(printouts1, printouts + 1);
+
+        mock.debounceTimer.setTimedOut(true);
+        logic.handleDebounceTimerTimeout();
     }
 }
 
@@ -340,8 +386,12 @@ TEST(Logic, Eeprom)
     // This simulates the timer being disabled before the last poweroff.
     {    
         // Create logic implementation and run the system.
+        Mock mock{};
+        mock.createLogic();
+        mock.runSystem();
 
         // Verify that the toggle timer is disabled after initialization.
+        EXPECT_FALSE(mock.toggleTimer.isEnabled());
     }
 
     // Case 2 - Verify that the toggle timer is enabled at startup if its EEPROM bit is set.
@@ -351,8 +401,12 @@ TEST(Logic, Eeprom)
         // associated bit in EEPROM before creating the logic implementation.
         
         // Create logic implementation and run the system.
+        Mock mock{};
+        mock.createLogic();
+        mock.runSystem();
 
         // Verify that the toggle timer was enabled during initialization.
+        EXPECT_TRUE(mock.toggleTimer.isEnabled());
     }
 }
 } // namespace

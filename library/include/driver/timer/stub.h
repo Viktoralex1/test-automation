@@ -97,7 +97,7 @@ public:
      * @brief Restart the timer.
      */
     void restart() noexcept override {
-        myInitialized = false;
+        myInitialized = true;
         myEnabled = false;  
         myTimedOut = false;
     }
