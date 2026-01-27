@@ -1,0 +1,416 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/arch/test/hw_platform.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/arch/test/hw_platform.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/adc/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/adc/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/eeprom/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/eeprom/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/gpio/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/gpio/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/serial/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/serial/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/tempsensor/smart.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/tempsensor/smart.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/tempsensor/tmp36.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/tempsensor/tmp36.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/timer/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/timer/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/driver/watchdog/atmega328p.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/driver/watchdog/atmega328p.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/logic/logic.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/logic/logic.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/ml/lin_reg/fixed.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/ml/lin_reg/fixed.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "../source/utils/utils.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/source/utils/utils.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/adc/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/adc/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/eeprom/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/eeprom/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/gpio/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/gpio/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/serial/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/serial/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/tempsensor/smart_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/tempsensor/smart_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/tempsensor/tmp36_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/tempsensor/tmp36_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/timer/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/timer/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "driver/watchdog/atmega328p_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/driver/watchdog/atmega328p_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "logic/logic_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/logic/logic_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "ml/lin_reg/fixed_test.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/ml/lin_reg/fixed_test.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-Werror",
+      "-Wall",
+      "-I../include",
+      "-I/usr/include",
+      "-DTESTSUITE",
+      "-o",
+      "testsuite",
+      "testsuite.cpp"
+    ],
+    "directory": "/home/viktor_alex/test-automation/library/test",
+    "file": "/home/viktor_alex/test-automation/library/test/testsuite.cpp",
+    "output": "/home/viktor_alex/test-automation/library/test/testsuite"
+  }
+]
